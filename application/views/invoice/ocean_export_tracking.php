@@ -78,7 +78,7 @@
                                         <select name="supplier_id" id="supplier_id" class="form-control " required="" tabindex="1"> 
                                             <option value=" "><?php echo display('select_one') ?></option>
                                             {all_supplier}
-                                            <option value="{supplier_name}">{supplier_name}</option>
+                                            <option value="{supplier_id}">{supplier_name}</option>
                                             {/all_supplier}
                                         </select>
                                     </div>

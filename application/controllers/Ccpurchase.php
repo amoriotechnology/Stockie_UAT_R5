@@ -104,17 +104,21 @@ class Ccpurchase extends CI_Controller {
 
         $CI->load->library('linvoice');
         $CI->load->model('Purchases');
-        $data=array();
+        $CI1 = & get_instance();
+        $CI1->load->model('Purchases');
+        $all_supplier = $CI1->Purchases->select_all_supplier();
          $get_customer= $this->accounts_model->get_customer();
          $bank_list        = $this->Web_settings->bank_list();
         $voucher_no = $this->Purchases->trucking_voucher_no();
         $data = array(
             'title'         => "Add Trucking",
+            'all_supplier'  => $all_supplier,
+           
             'customer_list' => $get_customer,
             'voucher_no'  => $voucher_no,
             'bank_list'     => $bank_list,
         );
-       
+
        // echo $content = $CI->linvoice->invoice_add_form();
         $content = $this->load->view('purchase/trucking', $data, true);
         //$content='';

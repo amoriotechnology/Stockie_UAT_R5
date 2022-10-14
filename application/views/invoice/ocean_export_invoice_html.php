@@ -55,94 +55,106 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
             <div class="row">
                <div class="document">
                   <div class="spreadSheetGroup">
-                     <table class="shipToFrom">
-                        <thead>
+                    <table class="shipToFrom" id="tab" cellspacing="10" cellpadding="10" >
+                    
+                    <tr>
+                             <td><img src="<?php echo  base_url().'assets/'.$logo; ?>" style='width: 10%;'></td>
+     
+                              
+                              
+                             
+                           </tr>
+
+
+    </table>
+    <table class="shipToFrom" id="tab1" style="border:1px solid black;" cellspacing="10" cellpadding="10">
+                    
+                    <tr>
+                     
+                       <td class="col-md-6 oc-head2"><span style='font-weight:bold;'>Company Info :</span> <br/><?php  echo $company_info[0]['company_name']."<br/>".$company_info[0]['email']."<br/>".$company_info[0]['address']."<br/>".$company_info[0]['mobile'];
+                              ?></td>
+                          <td style="height:50px;" class="col-md-6 oc-head1">Invoice Date :<p style="font-size:15px;">{invoice_date}</p></td>
+                              <td class="col-md-6 oc-head2">Booking no :<p style="font-size:15px;">{booking_no}</p></td>
+                       
+                      
+                    </tr>
+                    
+                   
+                   
+              </table>
+                     <table class="shipToFrom" id="tab1" cellspacing="10" cellpadding="10">
+                    
                            <tr>
-                              <th class="col-md-6 oc-head1"><p style="font-size:25px;">MAERSK</p></th>
-                              <th class="col-md-4 oc-head2">NON-NEGOTAION WAYBALL</th>
-                              <th class="col-md-2 oc-head3"><p>MAEU </p>
-                                <p>214250582</p></th>
-                              </th>
+                           
+                              
                               
                              
                            </tr>
                            
-                        </thead>
-                  
+                           <tr>
+                              <th class="col-md-6">Shipper : <br> {supplier_name}</th>
+                             <th class="booking col-md-6">Consignee:<br> {consignee}<br><?php  $company_info[0]['company_name'];   ?>   <br> 
+                              <?php  $company_info[0]['address'];   ?> <br> <?php  $company_info[0]['email'];   ?><br><?php  $company_info[0]['mobile'];   ?></th>
+                                
+                           </tr>
+                          
                      </table>
                      
-                     
-                     
-                     
-                     <table class="shipToFrom">
-                        <thead >
+  <table  style="width:100%;" id="tab2">
+  <tr>
+   
+   <td ><span> Notify Party: &nbsp;</span>{notify_party}</td>
+                 <td>&nbsp;</td>     <td>&nbsp;</td>   
+                     </tr>
                            <tr>
-                              <th class="col-md-6"> Shiper: INFINITY STONES EUROPE SRL <br> INFINITY STONES EUROPE SRL <br> 
-                              FRASCATI <br> 00044<br>RM <br> ITALY</th>
-                             <th class="booking col-md-6"><em>Booking No.</em>
-                                214250582 </th>
-                                
-                           </tr>
-                           
-                        </thead>
-                         
-                     </table> 
-                     
-                     
-                      <table class="shipToFrom">
-                        <thead >
-                           <tr>
-                              <td class="col-md-6">Consignee:<br> UNITED GRANITY DISTRIBUTORS INC<br>585 EXCEUTIVE DRIVE<br> 
-                              WILLOBROOK <br> 60527<br>UNITED STATES </td>
-                             <td class="col-md-6"><p>This contact is usbject to the terms, condistions and exceptions, 
-                                including the low & justdiction clause and limitation of liability
-                                 & declared value clauses, of current. maersk Bill of Lading (available form the Carries, 
-                                its agent and at ters maeask). To the extent necessary to enable the consignee to
-                                 sue and to be sued under this contract, the shiper on entering into this contract
-                                 does so on his own behalf and as agent for and on behalf of the consignee and warrants
-                                 that he has the authority to do so. The shipper shall be entited to change the consignee 
-                                at any time before deliver of the good provided he gives the carrier reasonable notice in
-                                 writing.</p><p>This contact is usbject to the terms, condistions and exceptions, 
-                                including the low & justdiction clause and limitation of liability
-                                 & declared value clauses, of current. maersk Bill of Lading (available form the Carries, 
-                                its agent and at ters maeask).</p>
-                                
-                                <p style="border-top:1px solid #000" >  Ownerd inhand outing (Not part of Carriage as defined in clause 1. For account ans risk of Merchant)</p>
-                                
-                                </td>
-                                                                
-                           </tr>
-                           
-                        </thead>
-                         
-                     </table> 
-                     
-                      <table class="shipToFrom maeask">
-                        <thead >
-                           <tr>
-                              <td class="col-md-3 " > <p><em>Vessel</em> <br>MAERSK VILNIUS</p> <p><em>Voyapge No</em><br>MAERSK VILNIUS</p></td>
-                              <td class="col-md-3" > <p><em>Port of Loading</em> <br>MAERSK VILNIUS</p><p><em>Vessel</em><br>Port of Discharge</p></td>
-                            
-                              
-                              
-                             <td class="col-md-6">
-                                
-                                <p >  Ownerd inhand outing (Not part of Carriage as defined in clause 1
-                                . For account ans risk of Merchant)</p>
-                                <p>  Ownerd inhand outing (Not part of Carriage as defined in clause 1
-                                . For account ans risk of Merchant)</p>
-                                </td>
+                              <td  ><span> Vessel :&nbsp;</span> {vessel}</td>
 
-                                                                
-                           </tr>
-                           
-                        </thead>
+<td style="border:1px solid black;"><span> Freight forwarder:&nbsp;</span> {freight_forwarder}</td> 
+<td style="border:1px solid black;padding-top:30px;"><span> Port of loading :&nbsp;</span>{port_of_loading}</td> 
+
+
+      </tr>
+      <tr>
+      <td><span>Voyage No :&nbsp;</span>{voyage_no}</td>
+<td style="border:1px solid black;"><span> placeof delivery :&nbsp;</span>{place_of_delivery}</td> 
+<td rowspan="2" style="border:1px solid black;"><span> Port of discharge:&nbsp;</span> {port_of_discharge}</td>
+
+
+                              </tr>
+                                   
+         
                          
-                     </table> 
-                  
-                  
-                       <table class="shipToFrom">
-                        <thead>
+                     </table>        
+                    
+                   <table id="tab3">
+                    <tr>
+                    <td  style="border:1px solid black;padding-top:30px;"><span>Estimated time of departure :&nbsp;</span>{etd}</td>
+                    <td ><span>Estimated Time of Arrival  :&nbsp;</span>{eta}</td> 
+    </tr>
+                   <tr>
+    
+    <td><span> Container No : &nbsp;</span>{container_no}</td> 
+    <td style="border:1px solid black;"><span> Seal No :&nbsp;</span>{seal_no}</td>  
+
+
+    </tr> 
+
+
+                   <table>
+                     
+                     
+                     <style>
+                     table { text-align: left; }
+                     span{
+                     
+                        font-weight:bold;
+                     }
+                        </style>
+                     
+               
+                  <br/>
+                       <table class="shipToFrom" id="tab4">
+                     
                            <tr>
                               <th style="text-align:center;">PARTICULARS FURNISHED BY SHIPPER</th>
                             
@@ -154,61 +166,194 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
                          
                               
                         
-                        </thead>
-                  
-                     </table>
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                     
-                     <table class="proposedWork" id="price" width="100%" style="margin-top:20px">
-                        
-                        <tbody>
-                           <tr >
-                              <td Class="col-md-8"><p><small>Kind of packages; Description of goods, Marks and Numbers; Container No./Seal No. </small></p>
-                                <p>1 Container Said to Contain 41 SLABS</p>
-                              <p>GRANITY SLABS</p>
-                              <br>
-                              <br>
-                              <p>ISE0090</p>
-                              <br>
-                              <br>
-                              <p>TRHU1150339 ML-ZA5708205 20 DRY 8'6 41 SLABS 20560.000 KGS </p>
-                               <p>SHIPPERS'S LOAD, STOW, WEIGHT AND COUNT </p>
-                                <p>FREIGHT PREPAID</p>
-                                 <p>CY/CY</p>
+                       
+                        <tr >
+                              <td Class="col-md-8"><p>{particular}</p>
                                  
                               </td>
-                              <td Class="col-md-2"><p><small>Weight</small></p><p>20560.000 KGS</p></td>
-                              <td Class="col-md-2"><p><small>Messurement</small></p></td>
+
                                
                             <div class="verify">
                             <p class="copy">Verify copy<p>
                         </div>
                               
                            </tr>
-                        </tbody>
-                        
-                        <tfoot>
-                          
-                         
-                        </tfoot>
                      </table>
-                
+                  
+                  
                   </div>
                </div>
             </div>
          </div>
     </section> <!-- /.content -->
 </div> <!-- /.content-wrapper -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.0.0-alpha.1/jspdf.plugin.autotable.js"></script>
+
+
+<script>
+$(document).ready(function () {
  
+
+    var pdf = new jsPDF('l', 'mm', [300, 300]);
+    var img = new Image();
+img.src = "<?php echo  base_url().'assets/'.$logo; ?>";
+
+var res1 = document.getElementById('tab');
+var res = pdf.autoTableHtmlToJson(res1);
+
+var elem2 = document.getElementById('tab1');
+var data2 = pdf.autoTableHtmlToJson(elem2);
+
+ var elem3 = document.getElementById('tab2');
+var data3 = pdf.autoTableHtmlToJson(elem3);
+
+var elem4 = document.getElementById('tab3');
+var data4 = pdf.autoTableHtmlToJson(elem4);
+var elem5 = document.getElementById('tab4');
+var data5 = pdf.autoTableHtmlToJson(elem5);
+
+var header = function(data) {
+pdf.setFontSize(18);
+ pdf.setTextColor(40);
+ pdf.setFontStyle('bold');
+//  doc.addImage(headerImgData, 'JPEG', data.settings.margin.left, 20, 50, 50);
+pdf.text("", data.settings.margin.left, 50);
+pdf.addImage(img, 'png', 120, 0,'30','20');
+};
+
+//var endPos = pdf.autoTableEndPosY();
+
+pdf.autoTable(res.columns, res.data, {
+ startY:  10,
+  pageBreak: 'auto',
+  theme: 'grid',
+
+  beforePageContent: header,
+ margin: {horizontal: 130, top: 10, bottom: 10},
+ headerStyles: {
+        lineWidth: 1,
+        lineColor: [204, 204, 204]
+    },
+ headerStyles: {fillColor: [255,255,255],textColor: 20},
+  styles: {
+   overflow: 'linebreak',
+   fontSize: 10,
+   tableWidth: 'auto',
+   columnWidth: 'auto',
+   valign: 'middle',
+    rowHeight: 20
+ },
+   drawHeaderRow: function(row, data) {
+  row.height = 15;
+ }
+ 
+});
+// pdf.addPage();
+pdf.autoTable(data2.columns, data2.data, {
+  startY :40,
+  pageBreak: 'auto',
+  theme: 'grid',
+  beforePageContent: header,
+
+  headerStyles: {fontStyle: 'normal',fillColor: [255,255,255],textColor: 20},
+   styles: {
+   overflow: 'linebreak',
+   fontSize: 10,
+  tableWidth: 'auto',
+   columnWidth: 'auto',
+   valign: 'middle',
+    rowHeight: 30
+ },
+    drawHeaderRow: function(row, data) {
+  row.height = 10;
+ },
+ margin: {horizontal: 10, top: 10, bottom: 10}
+});
+//pdf.addPage();
+pdf.autoTable(data3.columns, data3.data, {
+    startY :70,
+  pageBreak: 'auto',
+  theme: 'grid',
+  bodyStyles: {lineColor: [0, 0, 0]},
+  beforePageContent: header,
+  headerStyles: {
+        lineWidth: 1,
+        lineColor: [255, 255, 255]
+    },
+  headerStyles: {fontStyle: 'normal',fillColor: [255,255,255],textColor: 20},
+   styles: {
+   overflow: 'linebreak',
+   fontSize: 10,
+   tableWidth: 280,
+   columnWidth: 'auto',
+   valign: 'middle',
+    rowHeight: 10
+ },
+    drawHeaderRow: function(row, data) {
+  row.height = 10;
+ },
+ margin: {horizontal: 10, top: 10, bottom: 10}
+});
+
+pdf.autoTable(data4.columns, data4.data, {
+    startY :100,
+  pageBreak: 'auto',
+  theme: 'grid',
+  bodyStyles: {lineColor: [0, 0, 0]},
+  beforePageContent: header,
+  headerStyles: {
+        lineWidth: 1,
+        lineColor: [255, 255, 255]
+    },
+  headerStyles: {fontStyle: 'normal',fillColor: [255,255,255],textColor: 20},
+   styles: {
+   overflow: 'linebreak',
+   fontSize: 10,
+   tableWidth: 280,
+   columnWidth: 'auto',
+   valign: 'middle',
+    rowHeight: 10
+ },
+    drawHeaderRow: function(row, data) {
+  row.height = 10;
+ },
+ margin: {horizontal: 10, top: 10, bottom: 10}
+});
+pdf.autoTable(data5.columns, data5.data, {
+    startY :120,
+  pageBreak: 'auto',
+  theme: 'grid',
+  bodyStyles: {lineColor: [0, 0, 0]},
+  beforePageContent: header,
+  headerStyles: {
+        lineWidth: 1,
+        lineColor: [255, 255, 255]
+    },
+  headerStyles: {fontStyle: 'normal',fillColor: [255,255,255],textColor: 20},
+   styles: {
+   overflow: 'linebreak',
+   fontSize: 10,
+   tableWidth: 280,
+   columnWidth: 'auto',
+   valign: 'middle',
+    rowHeight: 10
+ },
+    drawHeaderRow: function(row, data) {
+  row.height = 10;
+ },
+ margin: {horizontal: 10, top: 10, bottom: 10}
+});
+
+pdf.save('Ocean_Export_Invoice_'+'<?php  echo $invoice_date;  ?>'+'.pdf');
+
+var timer = setTimeout(function() {
+            window.location='<?php  echo base_url();   ?>'+'Cinvoice/manage_ocean_export_tracking'
+        }, 10);
+
+   });
+ 
+ 
+   </script>

@@ -119,7 +119,7 @@
 
                              <?php foreach ($customer_list as $customer) {?>
 
-                       <option value="<?php echo html_escape($customer->customer_name);?>"><?php echo html_escape($customer->customer_name);?></option>
+                       <option value="<?php echo html_escape($customer->customer_id);?>"><?php echo html_escape($customer->customer_name);?></option>
 
                              <?php }?>
 

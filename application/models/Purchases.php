@@ -1889,6 +1889,28 @@ public function get_purchases_order($invoice_no='')
     
 
 }
+public function get_supplier($purchase_id='')
+{
+   $sql= 'SELECT b.* FROM `purchase_order` a JOIN supplier_information b on a.supplier_id=b.supplier_id where a.purchase_order_id='.$purchase_id;
+   $query=$this->db->query($sql);
+   if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+
+
+}
+public function company_info()
+{
+      $sql='SELECT * FROM `company_information` as c JOIN user_login as u on u.cid=c.company_id where u.id='.$_SESSION['user_id'];
+   $query=$this->db->query($sql);
+   if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+}
+
+ 
+
+
  public function update_purchase_order() {
             // echo "<pre>";
             //print_r($this->input->post('slabs')); die;
@@ -2238,5 +2260,8 @@ public function get_purchases_order($invoice_no='')
         }
         return false;
     }
+///////////////////////Invoice Area////////
+
+
 
 }

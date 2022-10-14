@@ -1,246 +1,263 @@
-<?php
-$CI = & get_instance();
-$CI->load->model('Web_settings');
-$Web_settings = $CI->Web_settings->retrieve_setting_editdata();
-?>
-
-
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-   
-<!-- Content Wrapper. Contains page content -->
+<!-- Purchase Payment Ledger Start -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="header-icon">
-            <i class="pe-7s-note2"></i>
-        </div>
-        <div class="header-title">
-            <h1><?php echo display('invoice_details') ?></h1>
-            <small><?php echo display('invoice_details') ?></small>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
-                <li><a href="#"><?php echo display('invoice') ?></a></li>
-                <li class="active"><?php echo display('invoice_details') ?></li>
-            </ol>
-        </div>
-    </section>
-    <!-- Main content -->
-    <section class="content">
-        <!-- Alert Message -->
-        <?php
-        $message = $this->session->userdata('message');
-        if (isset($message)) {
-            ?>
-            <div class="alert alert-info alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $message ?>                    
-            </div>
-            <?php
-            $this->session->unset_userdata('message');
-        }
-        $error_message = $this->session->userdata('error_message');
-        if (isset($error_message)) {
-            ?>
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo $error_message ?>                    
-            </div>
-            <?php
-            $this->session->unset_userdata('error_message');
-        }
-        ?>
-        <div class="" id="PROFORMA">
+	<section class="content-header">
+	    <div class="header-icon">
+	        <i class="pe-7s-note2"></i>
+	    </div>
+	    <div class="header-title">
+	        <h1>Purchase Order Invoice</h1>
+	        <small>Purchase Order Invoice</small>
+	        <ol class="breadcrumb">
+	            <li><a href="#"><i class="pe-7s-home"></i> <?php echo display('home') ?></a></li>
+	            <li><a href="#">Purchase Order Invoice</a></li>
+	            <li class="active">Purchase Order Invoice</li>
+	        </ol>
+	    </div>
+	</section>
+
+	<!-- Invoice information -->
+	<section class="content">
+
+		<!-- Alert Message -->
+	    <?php
+	        $message = $this->session->userdata('message');
+	        if (isset($message)) {
+	    ?>
+	    <div class="alert alert-info alert-dismissable">
+	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	        <?php echo $message ?>                    
+	    </div>
+	    <?php 
+	        $this->session->unset_userdata('message');
+	        }
+	        $error_message = $this->session->userdata('error_message');
+	        if (isset($error_message)) {
+	    ?>
+	    <div class="alert alert-danger alert-dismissable">
+	        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	        <?php echo $error_message ?>                    
+	    </div>
+	    <?php 
+	        $this->session->unset_userdata('error_message');
+	        }
+	    ?>
+
+	  <div class="" id="invoice">
             <div class="row">
-               <div class="document active">
+               <div class="document active" id="content">
                   <div class="spreadSheetGroup">
                      <table class="shipToFrom">
-                        <thead >
-                           <tr >
-                              <td class=" col-md-4"><img src="<?php echo base_url() ?>my-assets/image/logo.jpg" class="img-responsive" width="100px"></td>
-                              <td class="title col-md-4">PFROFORMA INVOICE</td>
-                  <td class=" col-md-4"><img src="<?php echo base_url() ?>my-assets/image/logo.jpg" class="img-responsive" width="100" style="float:right;"></td>
+                        <thead style="font-weight:bold">
+                           <tr id="top-head">
+                              <th class="title"><?php echo $company_info[0]['company_name']; ?></th>
+                              <th class="detail">Tel: <?php echo $company_info[0]['mobile']; ?> <br> Fax: <?php echo $company_info[0]['mobile']; ?></th>
                            </tr>
                         </thead>
-                      
-                  
-          
-              <tbody class="Exporter">
+                        <tbody>
                            <tr>
-                              <td contenteditable="true" >
-                  <small>Exporter</small>
-                  <P><b>EURO STOES</b></P>
-                  <P>Leksmondhof 140, 1100bet, amsterdam</P>
-                  <P>Hand phone: +31 611 792 2131</P>
-                  <P>Email: eursones@gail.com</P>
+                              <td contenteditable="true" style="width:50%">
+									<p><?php echo $company_info[0]['address']; ?></p>
+									<P>www.ewmarble.com</P>
                               </td>
-                              <td contenteditable="true">
-                                  <P>Invoice Date:</P>
-                  <P>ES2021003 DT: 16.08.2021</P>
-                  <P>BURYERS ORDER NO. & DATE</P>
-                  
-                  <hr>
-                  <p><b>OTHER REFRENCE</b></p>
-                  
-                              </td>
-                 <td contenteditable="true" >
-                                  <P>exporter's REF</P>
-                  <P>TAX CODE: NL.82172R7</P>
+                              <td contenteditable="true" style="width:50%">
+                                 
                               </td>
                            </tr>
                         </tbody>
-            
-            
-            
-              <tbody class="Exporter">
-                           <tr>
-                              <td contenteditable="true" >
-                  <small>CONSIGNEE</small>
-                  <P><b>EA ST WE ST MARBLE COMPANY</b></P>
-                  <P>VA:3920 stoneward BVD</P>
-                  <P>chartily VA 20151</P>
-                  <P>Ph: 703-376-8585, Fax:708-817-0666</P>
-                  <p>Email:txmaa@ewmarble.com</p>
-                  
-                  
-                
-                  
-                              </td>
-                              <td contenteditable="true">
-                                  <P><b>Container Pick Up Factory Address</b></P>
-                
-                  
-                  
-                              </td>
-                 <td contenteditable="true" >
-                  
-                              </td>
+                     </table>
+					 
+					   <table class="shipToFrom">
+                        <thead>
+                           <tr id="order">
+                              <th class="title text-center">Purchase Order</th>
+                             
                            </tr>
-                        </tbody>
-            
-           </table>
-           
-           
-           <table>
-              <tbody class="Exporter">
+                        </thead>
+                       
+                     </table>
+					 
+					 <table class="shipToFrom">
+                        <thead id="address">
                            <tr>
-                              <td class="col-md-3">
-                  
-                    <div class="destination">
-                    <p><b>PREF CARRIAGE</b></p>
-                    <p>Road</p>
-                    
-                    <p><b>VES & SEL</b><p>
-                </div>
-                  
-                
-                  
-                              </td>
-                              <td class="col-md-3">
-                                    <p><b>PLACE OF RECEIVE </b></p>
-                      <p>Port of Loading</p>
-                      
-                      <p><b>Durbal South Africa</b><p>
-                </div>
-                
-                  
-                  
-                              </td>
-                <td class="col-md-3" >
-                  <div class="destination">
-                  <p><b>Country of orgigin goods</b></p>
-                    <p>South Africa</p>
-                    
-                    <p><b>TERMS AND PAYMENT DELIVER </b><br> 50% advance before loading & 50% CAD<p>
-                </div>
-                              </td>
-                 <td class="col-md-3" >
-                  <div class="destination">
-                    <p><b>Country of final Destination</b></p>
-                      <p>UNITED STATES OF AMERICA</p>
-                </div>
-                              </td>
+                              <th style="width: 28%;"> Supplier:<?php echo
+                              $supplier[0]['supplier_name']; ?> <br> <strong><?php echo
+                              $supplier[0]['address']; ?>
+                              ></strong></th>
+                              <th style="width: 28%;">Ship to: <br> <b><?= $invoice->ship_to ?: 'Not Set'; ?></b></th>
+							   <th>
+								  <form>
+									  <div class="form-group invoice-form" style="text-align:right">
+										<span class="col-sm-5" style="font-size:16px;">P.O. Number: </span> <input type="text" class="col-sm-7 form-control" value="<?= $invoice->chalan_no ?: 'Not Set'; ?>" readonly /><br>
+										
+										<span class="col-sm-5">Date: </span> <input type="text" class="col-sm-7 form-control" value="<?= date("Y/m/d"); ?>" readonly><br>
+										 
+										<span class="col-sm-5">Create By: </span><input type="text" class="col-sm-7 form-control" readonly value="<?= $invoice->create ?: 'Not Set'; ?>"><br>
+
+										<span class="col-sm-5">Payment Terms: </span><input type="text" class="col-sm-7 form-control" readonly value="<?= $invoice->payment_terms ?: 'Not Set'; ?>"><br>
+										<span class="col-sm-5">Shipment Terms: </span><input type="text" class="col-sm-7 form-control" readonly value="<?= $invoice->shipment_terms ?: 'Not Set'; ?>"><br>
+										<span class="col-sm-5">Est. Ship Date: </span><input type="text" class="col-sm-7 form-control" readonly value="<?= $invoice->est_ship_date ?: 'Not Set'; ?>">
+									  </div>
+									  
+									</form>  
+								  </th>
                            </tr>
-                        </tbody>
-          </table>
-           
-        
-           
-  
-           
-           
-           
-           
+                        </thead>
+                         
+                     </table> 
+					 
+					 
+					 
+					 
                      <hr style="visibility:hidden"/>
                      
                      <table class="proposedWork" width="100%" style="margin-top:20px">
                         <thead>
-                           <th>PORT OF DISCHARGE</th>
-                           <th>PLACE OF DELIVERY</th>
-                           <th>QTY IN SQ. FT.</th>
-              <th>PRINCE IN USD</th>
-                           <th class="amountColumn">Amount IN USD</th>
+                           <th>Product Name (SKU)</th>
+                           <th>Slab</th>
+                           <th>Quantity</th>
+                           <!-- <th>Received</th> -->
+								   <th>Balance</th>
+								   <th>Unit Cost</th>
+                           <th class="amountColumn">Amount</th>
                            
                         </thead>
                         <tbody>
+                           <?php
+                           foreach($order as $value){ ?>
                            <tr>
-                              <td contenteditable="true">MARK SSNOS/ COUNT ANER NO. 1*20 COUNT AINER</td>
-                              <td class="unit" contenteditable="true">NO. &  KIND OF PKG &. <br>50 Slabe to max 26 or 27 tone <br> DESCRIPTION OF GOODS POLISHED GRANITE SLABS
-                African Rainbow-5749-26 slabe<br> African Rainbow -532-18 slabe
-                </td>
-                              <td contenteditable="true" class="description"></td>
-                  <td contenteditable="true" class="description">7.50 <br> 7.50</td>
-                
-                              <td class="amount" contenteditable="true"></td>
+                              <td contenteditable="true"><?= $value->product_name; ?> </td>
+                              <td class="unit" contenteditable="true"><?= $value->slabs; ?></td>
+                              <td contenteditable="true" class="description"><?= $value->quantity; ?>.</td>
+							   
+								<td contenteditable="true" class="description"><?= $value->price; ?>.</td>
+								<td  class="description"><?= $value->rate; ?></td>
+                              <td class="amount" contenteditable="true"><?= $value->total_amount; ?></td>
                             
                               
                            </tr>
+                           <?php } ?>
                         </tbody>
-            
+						 <tbody>
+      
+                        </tbody>
                         <tfoot>
                           
                            <tr>
-                            
-                   <td style="border:none;" class="account-detail">
-                  <p><b>Account Detail: </b></p>
-                  <p>Account holder :Euro Stones</p>
-                  <p>Rounting Number</p>
-                  <p>080 400 09519</p>
-                  <p>Account number</p>
-                  <p>960000000579542</p>
-                  <p>Address Transfer wise </p>
-                  <p>19 w 24th street </p>
-                  <p>New York NY 10010</p>
-                  <p>United States</p>
-                 
-                 
-                 </td>
-                   <td style="border:none" class="account-detail"> Ammoun in Word: <br> US DOLLARS: TWENTY FOUR THOUSAND AND ZERO CENT ONLY/-</td>
-                   <td style="border:none" class="account-detail">32000 SQ.FT.</td>
-                              <td style="border:none;text-align:right"class="account-detail">TOTAL:</td>
-                              <td class="total amount"  class="account-detail" style="vertical-align:bottom;"> 24000.00</td>
+                              <td style="border:none"></td>
+                              <td style="border:none"></td>
+                          
+							     <td style="border:none"></td>
+								   <td style="border:none"></td>
+                              <td style="border:none;text-align:right">TOTAL:</td>
+                              <td class="total amount" contenteditable="true""><?= $invoice->grand_total_amount ?: 'Not Set'; ?></td>
                               <td class="docEdit"></td>
-                           </tr>
-               
-               
-                <tr>
-                            
-                 
-                   <td style="border:none"></td>
-                   <td style="border:none"></td>
-                              
-                              <td class="sign " style="border:none" >Please sign and seal </td>
-                <td class="sign " style="border:none"> Authorised Signature</td>
-                             
                            </tr>
                         </tfoot>
                      </table>
-          
+                     <table width="100%">
+                        <tbody>
+                           <tr>
+                              <td style="50%" style="vertical-align:top">
+                                 <table style="width:100%">
+                                    <tbody>
+                                       <tr>
+                                          <td style="text-align:left">
+										    <p><i>Notes</i></p>
+											<div class="notes">
+                                             <p>-Cargo needs to be insured tilthe destinationport due to incresing numbers of possible accident at ports</p>
+                                             <p>-90% CAD against BOL release and 10% in 2 days after arrivel to warehouse</p>
+                                            </div>
+                                             <p >
+												<b style="border-bottom:2px solid 	">Terms:</b></br>
+												PLEASE FOLLOW THE IMPORTANT THERMS AS BELOW:</p>
+												
+												<p>- proforma Ref#: ES001</p>
+												<p>-Please DO NOT SHIP less than 26-27 MT or 3200 SQF on each container</p>
+												<p>-Please refer PO number on related shipping documents</p>
+											    <p>-Please DESCRIBE the stone type AS GRANITE (HTS CODE: 6802.93.0025); on </p>
+												<p>Commercial invoice and packing List.</p>
+												<p>-Cracks/Fissures/Sports/Color Varriations are not accepted for the receipt of goods at EWM Company</p>
+												<p>-Shipment Must be insured and Must be CIF term.</p>
+												<p>-Shipers Must accept and ship 2size allowance from the edge for industry practice.</p>
+                                             
+                                          </td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </td>
+                              <td style="padding-left:50px; width:50%; vertical-align:top">
+                                 <table style="width:100%">
+                                    <tbody>
+                                    
+                                       <tr>
+                                          <td style="padding-top:60px">
+                                             Name: _____________________________ 
+                                          </td>
+										  </tr>
+										  <tr>
+										   <td style="padding-top:60px">
+                                             Signature: _____________________________
+                                          </td>
+
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </div>
                </div>
             </div>
-    </section> <!-- /.content -->
-</div> <!-- /.content-wrapper -->
+         </div>
+	</section>
+</div>
+<!-- Purchase ledger End  -->
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script>
+   /*
+$(document).ready(function () {
  
+ var pdf = new jsPDF('p','pt','a4');
+    const invoice = document.getElementById("content");
+             console.log(invoice);
+             console.log(window);
+             var pageWidth = 8.5;
+             var margin=0.5;
+             var opt = {
+   lineHeight : 1.2,
+   margin : 0.2,
+   maxLineWidth : pageWidth - margin *1,
+                 filename: 'invoice'+'.pdf',
+                 allowTaint: true,
+                
+                 html2canvas: { scale: 3 },
+                 jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+             };
+              html2pdf().from(invoice).set(opt).toPdf().get('pdf').then(function (pdf) {
+  var totalPages = pdf.internal.getNumberOfPages();
+ for (var i = 1; i <= totalPages; i++) {
+    pdf.setPage(i);
+    pdf.setFontSize(10);
+    pdf.setTextColor(150);
+    
+  }
+  }).save();
+
+   
+   });
+*/
+   </script>

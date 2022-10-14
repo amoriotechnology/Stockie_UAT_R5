@@ -44,19 +44,19 @@
 
 	  <div class="" id="invoice">
             <div class="row">
-               <div class="document active">
+               <div class="document active" id="content">
                   <div class="spreadSheetGroup">
                      <table class="shipToFrom">
                         <thead style="font-weight:bold">
                            <tr id="top-head">
-                              <th class="title">East West Marble Company</th>
-                              <th class="detail">Tel: 703-376-8585 <br> Fax: 703-817-0666</th>
+                              <th class="title"><?php echo $company_info[0]['company_name']; ?></th>
+                              <th class="detail">Tel: <?php echo $company_info[0]['mobile']; ?> <br> Fax: <?php echo $company_info[0]['mobile']; ?></th>
                            </tr>
                         </thead>
                         <tbody>
                            <tr>
                               <td contenteditable="true" style="width:50%">
-									<p>3920 STONECROFT BLVD SUITE # I, CHANTLLY, VA- 20151-1031</p>
+									<p><?php echo $company_info[0]['address']; ?></p>
 									<P>www.ewmarble.com</P>
                               </td>
                               <td contenteditable="true" style="width:50%">
@@ -79,7 +79,10 @@
 					 <table class="shipToFrom">
                         <thead id="address">
                            <tr>
-                              <th style="width: 28%;"> Supplier: <br> <strong><?= $invoice->address ?: 'Not Set'; ?></strong></th>
+                              <th style="width: 28%;"> Supplier:<?php echo
+                              $supplier[0]['supplier_name']; ?> <br> <strong><?php echo
+                              $supplier[0]['address']; ?>
+                              ></strong></th>
                               <th style="width: 28%;">Ship to: <br> <b><?= $invoice->ship_to ?: 'Not Set'; ?></b></th>
 							   <th>
 								  <form>
@@ -210,3 +213,50 @@
 	</section>
 </div>
 <!-- Purchase ledger End  -->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script>
+$(document).ready(function () {
+ 
+ var pdf = new jsPDF('p','pt','a4');
+    const invoice = document.getElementById("content");
+             console.log(invoice);
+             console.log(window);
+             var pageWidth = 8.5;
+             var margin=0.5;
+             var opt = {
+   lineHeight : 1.2,
+   margin : 0.2,
+   maxLineWidth : pageWidth - margin *1,
+                 filename: 'invoice'+'.pdf',
+                 allowTaint: true,
+                
+                 html2canvas: { scale: 3 },
+                 jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+             };
+              html2pdf().from(invoice).set(opt).toPdf().get('pdf').then(function (pdf) {
+  var totalPages = pdf.internal.getNumberOfPages();
+ for (var i = 1; i <= totalPages; i++) {
+    pdf.setPage(i);
+    pdf.setFontSize(10);
+    pdf.setTextColor(150);
+    
+  }
+  }).save();
+
+   
+   });
+
+   </script>
