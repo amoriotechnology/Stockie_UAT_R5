@@ -129,7 +129,7 @@ echo $quantity;
                    'create_by'          =>  $this->session->userdata('user_id'),
                    'status'             => 1
                );
-               print_r($data1);
+             //  print_r($data1);
                die();
                $this->db->insert('profarma_invoice_details', $data);
            }         
@@ -1920,7 +1920,7 @@ public function availability($product_nam,$product_model){
 
         );
 
-    print_r($datainv);
+    //print_r($datainv);
 
         $this->db->insert('invoice', $datainv);
 
@@ -2241,7 +2241,7 @@ echo $this->db->last_query();
 
             );
 
-print_r($data1);
+//print_r($data1);
 
                 $this->db->insert('invoice_details', $data1);
 

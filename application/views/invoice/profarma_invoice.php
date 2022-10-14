@@ -10,6 +10,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 <script src="<?php echo base_url() ?>my-assets/js/countrypicker.js" type="text/javascript"></script>
+
 <style>
     /*   Bootstrap Country Select CSS  */
  button[data-toggle="dropdown"].btn-default,
@@ -75,8 +76,8 @@ border: 2px solid #dce4ec;
                     </div>
 
                     <div class="panel-body">
-                    <form action="" id='formper'>
-                        
+                    <?php echo form_open_multipart('Cinvoice/performer_ins',array('class' => 'form-vertical', 'id' => 'insert_sale','name' => 'insert_sale'))?>
+     
 
                         <div class="row">
                             <div class="col-sm-6" style="display:none;">
@@ -85,6 +86,8 @@ border: 2px solid #dce4ec;
                                         <i class="text-danger">*</i>
                                     </label>
                                     <div class="col-sm-6">
+                                    <input type ="hidden" name="csrf_test_name" id="csrf_test_name" value="<?php echo $this->security->get_csrf_hash();?>">
+
                                                <textarea rows="4" cols="50" name="billing_address" class=" form-control" placeholder='Add Exporter Detail' id="billing_address"> </textarea>
                                     </div>
                                 
@@ -269,7 +272,7 @@ border: 2px solid #dce4ec;
 </td>
 </tr>
 </table>
-                            <form id="pdt">
+                          
                             <table class="table table-bordered table-hover" id="normalinvoice">
                                 <thead>
                                      <tr>
@@ -347,7 +350,7 @@ border: 2px solid #dce4ec;
                                    
                                 </tfoot>
                             </table>
-                                            </form>
+                                         
                         </div>
 <div class="form-group row">
 
@@ -381,7 +384,7 @@ border: 2px solid #dce4ec;
                                     <td>
                                         <input type="hidden" name="uid" value="<?php echo $_SESSION['user_id']; ?>">
     
-                                        <input type="button" id="add_purchase" class="btn btn-primary btn-large"  onclick="  $('#btn1_download').css('display','block');
+                                        <input type="submit" id="add_purchase" class="btn btn-primary btn-large"  onclick="  $('#btn1_download').css('display','block');
        $('#btn1_email').css('display','block');"name="add-purchase" value="<?php echo display('Save') ?>" /></td>
                                     <td>&nbsp;</td>
                                     <td id="btn1_download">
@@ -406,7 +409,7 @@ border: 2px solid #dce4ec;
 
 <input type="text" id="currency"/>
                                 
-                                            </form>
+<?php echo form_close()?>
                     </div>
                 </div>
 
@@ -581,7 +584,7 @@ var csrfHash = '<?php echo $this->security->get_csrf_hash();?>';
 
 
     //create data object here so we can dynamically set new csrfName/Hash
-    $('#add_purchase').click(function(id){
+  /*  $('#add_purchase').click(function(id){
       
         
         var aval = $('#available_quantity').val();
@@ -630,6 +633,7 @@ var csrfHash = '<?php echo $this->security->get_csrf_hash();?>';
     });
 
 });
+*/
 function addInputField(t) {
     //debugger;
     var row = $("#normalinvoice tbody tr").length;
@@ -673,8 +677,9 @@ function addInputField(t) {
         tab12 = tabindex + 12;
         e.innerHTML = "<td><select name='product_name[]' id='prodt_" + count + "' class='form-control product_name' onchange='available_quantity("+ count +");'>"+
         "<option value='Select the Product' selected>Select the Product</option></select>"+
-        "<input type='hidden' class='common_product autocomplete_hidden_value  product_id_" + count + "' name='product_id[]' id='SchoolHiddenId /></td><td><input type='text' name='desc[]'' class='form-control text-right ' tabindex='" + tab2 + "'/></td><td><input type='text' name='available_quantity[]' id='available_quantity[]' class='form-control text-right common_avail_qnt available_quantity_" + count + "' value='0' readonly='readonly' /></td><td> <input type='text' name='product_quantity[]' id='cartoon_" + count + "'  required='required' onkeyup='total_amt(" + count + ");'  onchange='total_amt(" + count + ");' id='total_qntt_" + count + "' class='common_qnt total_qntt_" + count + " form-control text-right'  placeholder='0.00' min='0' tabindex='" + tab3 + "'/></td><td><input type='text' name='product_rate[]' id='product_rate_" + count + "' onkeyup='quantity_calculate(" + count + ");' onchange='quantity_calculate(" + count + ");' id='price_item_" + count + "' class='common_rate price_item" + count + " form-control text-right' required placeholder='0.00' min='0' tabindex='" + tab4 + "'/></td><td class='text-right'><input class='common_total_price total_price form-control text-right' type='text' name='total_price[]' id='total_price_" + count + "' value='0.00' readonly='readonly'/></td><td>"+tbfild+"<input type='hidden' id='all_discount_" + count + "' class='total_discount dppr' name='discount_amount[]'/><button tabindex='" + tab5 + "' style='text-align: right;' class='btn btn-danger' type='button' value='Delete' onclick='deleteRow(this)'><i class='fa fa-close'></i></button></td>",
-                document.getElementById(t).appendChild(e),
+        "<input type='hidden' class='autocomplete_hidden_value product_id_'"+ count +"' name='product_id[]' id='SchoolHiddenId'/><td><input type='text' name='available_quantity[]' id='' class='form-control text-right common_avail_qnt available_quantity_" + count + "' placeholder='0.00' readonly='readonly' /></td><td> <input type='text' name='product_quantity[]'  required='required' onkeyup='quantity_calculate(" + count + ");' onchange='quantity_calculate(" + count + ");' id='cartoon_" + count + "' class='form-control text-right store_cal_" + count + "'  placeholder='0.00' min='0' tabindex='" + tab3 + "'/></td><td><input type='text' name='product_rate[]' onkeyup='quantity_calculate(" + count + ");' onchange='quantity_calculate(" + count + ");' id='product_rate_" + count + "' class='form-control product_rate_" + count + " text-right' required placeholder='0.00' min='0' tabindex='" + tab4 + "'/></td><td class='text-right'><input class='common_total_price total_price form-control text-right' type='text' name='total_price[]' id='total_price_" + count + "' value='0.00' readonly='readonly'/></td><td>"+tbfild+"<input type='hidden' id='all_discount_" + count + "' class='total_discount dppr' name='discount_amount[]'/><button tabindex='" + tab5 + "' style='text-align: right;' class='btn btn-danger' type='button' value='Delete' onclick='deleteRow(this)'><i class='fa fa-close'></i></button></td>",
+            
+        document.getElementById(t).appendChild(e),
              
                 count++
     }
@@ -806,5 +811,6 @@ $.ajax({
 
 
      });  */ 
+     
 </script>
 

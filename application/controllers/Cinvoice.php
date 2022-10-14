@@ -1738,13 +1738,54 @@ print_r($data);
 
     public function profarma_invoice_inserted_data() {
 
-         $CI = & get_instance();
+        $CI = & get_instance();
+        ////////////Tax value////////////////
 
-        $CI->auth->check_admin_auth();
-
-        $CI->load->library('linvoice');
-        $data=array();
-       // echo $content = $CI->linvoice->invoice_add_form();
+        $tx=& get_instance();
+        $tx->load->model('Tax');
+        $tx->Tax->taxlist();
+       // $taxfield = $CI->db->select('tax_name,default_value')
+       // ->from('tax_settings')
+       // ->get()
+       // ->result_array();   
+       // $data1 = array(
+           
+       //     'taxes'         => $taxfield
+            
+      //  );
+      //  $invoiceForm = $CI->parser->parse('invoice/add_invoice_form', $data1, true);
+        $CI = & get_instance();
+        $CI->load->model('Invoices');
+        $CI->load->model('Web_settings');
+        $customer_details = $CI->Invoices->pos_customer_setup();
+     
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $taxfield1 = $CI->db->select('tax_id,tax')
+        ->from('tax_information')
+        ->get()
+        ->result_array();
+        $taxfield = $CI->db->select('tax_name,default_value')
+                ->from('tax_settings')
+                ->get()
+                ->result_array();
+        $bank_list          = $CI->Web_settings->bank_list();
+        $prodt = $CI->db->select('product_name,product_model,p_quantity')
+        ->from('product_information')
+        ->get()
+        ->result_array();
+        $voucher_no = $CI->Invoices->commercial_inv_number();
+        $data = array(
+            'title'         => display('add_new_invoice'),
+            'discount_type' => $currency_details[0]['discount_type'],
+            'taxes'         => $taxfield,
+            'tax'           => $taxfield1,
+            'product'       =>$prodt,
+            'customer_name' => isset($customer_details[0]['customer_name'])?$customer_details[0]['customer_name']:'',
+            'customer_id'   => isset($customer_details[0]['customer_id'])?$customer_details[0]['customer_id']:'',
+            'bank_list'     => $bank_list,
+            'voucher_no' => $voucher_no,
+                'tax_name'=>'ww',
+        );
         $content = $this->load->view('invoice/profarma_invoice_html', $data, true);
         //$content='';
         $this->template->full_admin_html_view($content);
@@ -2529,22 +2570,22 @@ print_r($data);
             //$this->template->full_admin_html_view($content);
         }
         public function performer_ins(){
+          
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('linvoice');
         $data=array();
-       
-        $output = new stdClass;
-        $output->csrfName = $this->security->get_csrf_token_name();
-        $output->csrfHash = $this->security->get_csrf_hash();
-        $output->formdata=    $formdata['available_quantity'];
-        echo json_encode($output);
+        $this->load->helper('form');
+        $this->load->helper('url');
+        $this->load->library('form_validation');
+      
+      // print_r($_POST);
     
          $purchase_id = date('YmdHis');
          $chalan_no=$this->input->post('chalan_no');
-        echo $chalan_no;
+       // echo $chalan_no;
         $postData = $this->input->post();
-        print_r($postData);
+       // print_r($postData);
        // foreach ($post as $id)
        //  {
       //   $this->model_admin->delete_admin_user($id);
@@ -2570,16 +2611,16 @@ print_r($data);
               //  $CI->load->model('Invoices');
                 // $this->Invoices->add_profarma_invoice($data);
                  $this->db->insert('profarma_invoice', $data);
-                 echo   $this->db->last_query();
-                echo json_encode($data);
+               //  echo   $this->db->last_query();
+               // echo json_encode($data);
               //   var_dump($_POST);
                  $avl = $this->input->post('available_quantity');
-                 $p_id = $this->input->post('product_id');
-               
+                 $p_id = $this->input->post('product_name');
+         // print_r($p_id);
                  $quantity = $this->input->post('product_quantity');
                  $rate = $this->input->post('product_rate');
                  $t_price = $this->input->post('total_price');
-                 $rowCount = count($this->input->post('trucking_date',TRUE));
+                 $rowCount = count($this->input->post('product_name',TRUE));
                  for ($i = 0; $i < $rowCount; $i++) {
                
                     $product_quantity = $quantity[$i];
