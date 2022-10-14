@@ -230,13 +230,17 @@ class Linvoice {
 
         }
 
-
-
+        $CII = & get_instance();
+        $CII->load->model('invoice_design');
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
-
+        $dataw = $CII->invoice_design->retrieve_data();
         $company_info = $CI->Invoices->retrieve_company();
 
         $data = array(
+            'header'=> $dataw[0]['header'],
+            'logo'=> $dataw[0]['logo'],
+            'color'=> $dataw[0]['color'],
+            'template'=> $dataw[0]['template'],
 
         'title'            => 'Ocean Export Tracking Invoice Detail',
 
@@ -286,7 +290,7 @@ class Linvoice {
 
         $CI = & get_instance();
 
-        $CI->load->model('Ppurchases');
+        $CI->load->model('Invoices');
 
         $CI->load->model('Web_settings');
 
@@ -294,7 +298,7 @@ class Linvoice {
 
 
 
-        $purchase_detail = $CI->Ppurchases->trucking_details_data($purchase_id);
+        $purchase_detail = $CI->Invoices->trucking_details_data($purchase_id);
 
 
 
@@ -325,8 +329,10 @@ class Linvoice {
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $CII = & get_instance();
         $CC = & get_instance();
-      
-        $company_info = $CI->Ppurchases->retrieve_company();
+        $w = & get_instance();
+
+        $w->load->model('Invoices');
+     //   $company_info = $w->Ppurchases->retrieve_company();
         $CII->load->model('invoice_design');
         $CC->load->model('invoice_content');
         $CI1 = & get_instance();
@@ -377,18 +383,18 @@ class Linvoice {
 
             'purchase_all_data'=> $purchase_detail,
 
-            'company_info'     => $company_info,
+           // 'company_info'     => $company_info,
 
             'Web_settings'     => $currency_details,
 
         );
 
         // echo "<pre>";
-        // print_r($data);die();
+    //print_r($data);die();
 
 
 
-        $chapterList = $CI->parser->parse('purchase/trucking_invoice_html', $data, true);
+        $chapterList = $CI->parser->parse('invoice/trucking_invoice_html', $data, true);
 
         return $chapterList;
 

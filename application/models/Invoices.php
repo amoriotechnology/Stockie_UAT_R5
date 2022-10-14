@@ -970,7 +970,7 @@ public function availability($product_nam,$product_model){
           $base_url = base_url();
           $jsaction = "return confirm('Are You Sure ?')";
 
-           $button .='  <a href="'.$base_url.'Cinvoice/trucking_details_data/'.$record->trucking_id.'" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="'.display('purchase_details').'"><i class="fa fa-window-restore" aria-hidden="true"></i></a>';
+           $button .='  <a href="'.$base_url.'Cinvoice/trucking_details_data/'.$record->trucking_id.'" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="'.display('purchase_details').'"><i class="fa fa-download" aria-hidden="true"></i></a>';
       if($this->permission1->method('manage_purchase','update')->access()){
          $button .=' <a href="'.$base_url.'Cinvoice/trucking_update_form/'.$record->trucking_id.'" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="'. display('update').'"><i class="fa fa-pencil" aria-hidden="true"></i></a> ';
      }
@@ -1011,11 +1011,11 @@ public function availability($product_nam,$product_model){
         $this->db->select('a.*,b.*,c.*');
         $this->db->from('sale_trucking a');
         $this->db->join('customer_information b', 'b.customer_id = a.bill_to');
-        $this->db->join('sale_trucking_details c', 'c.sale_trucking_detail_id = a.trucking_id');
+        $this->db->join('sale_trucking_details c', 'c.sale_trucking_id = a.trucking_id');
         $this->db->where('a.trucking_id', $purchase_id);
         //$this->db->group_by('d.product_id');
         $query = $this->db->get();
-        echo $this->db->last_query();
+      //  echo $this->db->last_query();
         if ($query->num_rows() > 0) {
             return $query->result_array();
         }
