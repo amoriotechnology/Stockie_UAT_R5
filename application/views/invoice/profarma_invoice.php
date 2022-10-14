@@ -76,8 +76,6 @@ border: 2px solid #dce4ec;
 
                     <div class="panel-body">
                     <form action="" id='formper'>
-                        
-
                         <div class="row">
                             <div class="col-sm-6" style="display:none;">
                                <div class="form-group row">

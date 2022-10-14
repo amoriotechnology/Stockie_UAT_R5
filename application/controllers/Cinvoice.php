@@ -2548,7 +2548,7 @@ print_r($data);
                     'description_goods'=>$this->input->post('goods'),
                     'total'=>$this->input->post('total'),
                     'ac_details'=>$this->input->post('ac_details'),
-                     'sales_by'        => $this->session->userdata('user_id')
+                    'sales_by'        => $this->session->userdata('user_id')
                  );
               //  $CI->load->model('Invoices');
                 // $this->Invoices->add_profarma_invoice($data);

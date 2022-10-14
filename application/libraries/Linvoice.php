@@ -54,10 +54,15 @@ class Linvoice {
      
 
         $CI = & get_instance();
+        // $CII = & get_instance();
         $CI->load->model('Invoices');
         $CI->load->model('Web_settings');
         $CI->load->library('occational');
+        // $CII->load->model('invoice_design');
+        // $C->load->model('invoice_content');
         $company_info = $CI->Invoices->retrieve_company();
+        // $dataw = $CII->invoice_design->retrieve_data();
+        // $datacontent = $CI->invoice_content->retrieve_data();
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $data = array(
             'title'         => display('manage_invoice'),
@@ -65,6 +70,18 @@ class Linvoice {
             'currency'      => $currency_details[0]['currency'],
             'company_info'  => $company_info,
         );
+
+        // $data = array(
+        //     'header'=> $dataw[0]['header'],
+        //     'logo'=> $dataw[0]['logo'],
+        //     'color'=> $dataw[0]['color'],
+        //     'template'=> $dataw[0]['template'],
+        //     'title'         => display('manage_invoice'),
+        //     'total_invoice' => $CI->Invoices->count_invoice(),
+        //     'currency'      => $currency_details[0]['currency'],
+        //     'company_info'  => $company_info,
+        // );
+
         $invoiceList = $CI->parser->parse('invoice/packing_list', $data, true);
         return $invoiceList;
     }

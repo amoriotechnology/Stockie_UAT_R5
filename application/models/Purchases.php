@@ -614,6 +614,8 @@ class Purchases extends CI_Model {
           $button = '';
           $base_url = base_url();
           $jsaction = "return confirm('Are You Sure ?')";
+           
+          $button .='  <a href="'.$base_url.'Cpurchase/packing_list_details_data/'.$record->expense_packing_id.'" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="Packing Download"><i class="fa fa-window-restore" aria-hidden="true"></i></a>';
 
            $button .='  <a href="'.$base_url.'Cpurchase/packing_list_details_data/'.$record->expense_packing_id.'" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="Packing List Detail"><i class="fa fa-window-restore" aria-hidden="true"></i></a>';
               if($this->permission1->method('manage_purchase','update')->access()){
@@ -631,6 +633,7 @@ class Purchases extends CI_Model {
                 'gross_weight' => $record->gross_weight,
                 'container_no' => $record->container_no,
                 'invoice_date'    =>$record->invoice_date,
+                // 'invoice_date'    =>$this->occational->dateConvert($record->invoice_date),
                 'total' => $record->grand_total_amount,
                 'thickness' => $record->thickness,
                 'button'           =>$button,
@@ -1097,6 +1100,7 @@ class Purchases extends CI_Model {
        
 
             $data1 = array(
+                'product_id'   =>  $p_id,
                 'expense_packing_detail_id' => $this->generator(15),
                 'expense_packing_id'        => $purchase_id,
                 'serial_no'         => $serial,
@@ -2108,6 +2112,18 @@ public function get_purchases_order($invoice_no='')
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             
+            return $query->result_array();
+        }
+        return false;
+    }
+
+    public function packing_details_data($expense_packing_id) {
+        // $sql='SELECT * FROM expense_packing_list as a JOIN expense_packing_list_detail as b ON b.product_id = a.product_id WHERE a.expense_packing_id = '.$expense_packing_id;
+        $sql = 'SELECT * FROM expense_packing_list as a JOIN expense_packing_list_detail as ac JOIN product_information as b ON b.product_id = a.product_id WHERE a.expense_packing_id = '.$expense_packing_id;
+        $query = $this->db->query($sql);
+//    echo $this->db->last_query();
+//        die(); 
+        if ($query->num_rows() > 0) {
             return $query->result_array();
         }
         return false;

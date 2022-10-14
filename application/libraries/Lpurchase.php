@@ -1211,7 +1211,7 @@ class Lpurchase {
 
         $company_info = $CI->Purchases->retrieve_company();
 
-     //print_r($purchase_detail); die;  
+    //  print_r($purchase_detail); die;  
 
         $data = array(
 

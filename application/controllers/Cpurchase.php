@@ -491,6 +491,49 @@ class Cpurchase extends CI_Controller {
 
     }
 
+
+    public function packing_list_details_data($expense_packing_id) {
+        $CI = & get_instance();
+        $CC = & get_instance();
+        $CA = & get_instance();
+        $CB = & get_instance();
+        $CI->auth->check_admin_auth();
+        $CI->load->library('linvoice');
+        $CB->load->model('Purchases');
+        $CA->load->model('invoice_design');
+        $CC->load->model('invoice_content');
+        $dataw = $CA->invoice_design->retrieve_data();
+        $datacontent = $CI->invoice_content->retrieve_data();
+
+        $packing_details = $CB->Purchases->packing_details_data($expense_packing_id);
+
+        $data=array(
+            'header'=> $dataw[0]['header'],
+            'logo'=> $dataw[0]['logo'],
+            'color'=> $dataw[0]['color'],
+            'template'=> $dataw[0]['template'],
+            'invoice'  =>$packing_details[0]['invoice_no'],
+            'invoice_date' => $packing_details[0]['invoice_date'],
+            'gross' => $packing_details[0]['gross_weight'],
+            'container' => $packing_details[0]['container_no'],
+            'description' => $packing_details[0]['description'],
+            'thickness' => $packing_details[0]['thickness'],
+            'total' => $packing_details[0]['grand_total_amount'],
+            'serial' => $packing_details[0]['serial_no'],
+            'slab' => $packing_details[0]['slab_no'],
+            'width' => $packing_details[0]['width'],
+            'height' => $packing_details[0]['height'],
+            'area' => $packing_details[0]['area'],
+            'product' => $packing_details[0]['product_name']
+        );
+     
+        // print_r($data); exit();
+       // echo $content = $CI->linvoice->invoice_add_form();
+        $content = $this->load->view('purchase/packing_invoice_html', $data, true);
+        //$content='';
+        $this->template->full_admin_html_view($content);
+    }
+
     public function trucking_details_data() {
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
