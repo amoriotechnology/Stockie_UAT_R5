@@ -854,7 +854,8 @@ public function availability($product_nam,$product_model){
           $button = '';
           $base_url = base_url();
           $jsaction = "return confirm('Are You Sure ?')";
-
+          $button .='  <a href="'.$base_url.'Cinvoice/ocean_export_tracking_details_data/'.$record->ocean_export_tracking_id.'" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="'.display('purchase_details').'"><i class="fa fa-download" aria-hidden="true"></i></a>';
+    
            $button .='  <a href="'.$base_url.'Cinvoice/ocean_export_tracking_details_data/'.$record->ocean_export_tracking_id.'" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="left" title="'.display('purchase_details').'"><i class="fa fa-window-restore" aria-hidden="true"></i></a>';
       if($this->permission1->method('manage_purchase','update')->access()){
          $button .=' <a href="'.$base_url.'Cinvoice/ocean_export_tracking_update_form/'.$record->ocean_export_tracking_id.'" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="left" title="'. display('update').'"><i class="fa fa-pencil" aria-hidden="true"></i></a> ';
@@ -1006,6 +1007,20 @@ public function availability($product_nam,$product_model){
     }
 
 
+    public function trucking_details_data($purchase_id) {
+        $this->db->select('a.*,b.*,c.*');
+        $this->db->from('sale_trucking a');
+        $this->db->join('customer_information b', 'b.customer_id = a.bill_to');
+        $this->db->join('sale_trucking_details c', 'c.sale_trucking_detail_id = a.trucking_id');
+        $this->db->where('a.trucking_id', $purchase_id);
+        //$this->db->group_by('d.product_id');
+        $query = $this->db->get();
+        echo $this->db->last_query();
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        }
+        return false;
+    }
 
         //Retrieve trucking Edit Data
     public function retrieve_trucking_editdata($purchase_id) {
@@ -1928,7 +1943,7 @@ public function availability($product_nam,$product_model){
 
 
    $cusifo = $this->db->select('*')->from('customer_information')->where('customer_id',$customer_id)->get()->row();
-
+echo $this->db->last_query();
     $headn = $customer_id.'-'.$cusifo->customer_name;
 
     $coainfo = $this->db->select('*')->from('acc_coa')->where('HeadName',$headn)->get()->row();
@@ -2226,11 +2241,11 @@ public function availability($product_nam,$product_model){
 
             );
 
-            if (!empty($quantity)) {
+print_r($data1);
 
                 $this->db->insert('invoice_details', $data1);
 
-            }
+            
 
         }
 

@@ -2510,7 +2510,24 @@ print_r($data);
                     }
 
         }
+        public function trucking_details_data($purchase_id) {
 
+            $CI = & get_instance();
+            $CI->auth->check_admin_auth();
+            $CI->load->library('linvoice');
+            $content = $CI->linvoice->trucking_details_data($purchase_id);
+            $this->template->full_admin_html_view($content);
+    
+    
+            // $CI = & get_instance();
+            // $CI->auth->check_admin_auth();
+            // $CI->load->library('linvoice');
+            // $data=array();
+           // echo $content = $CI->linvoice->invoice_add_form();
+            //$content = $this->load->view('purchase/trucking_invoice_html', $data, true);
+            //$content='';
+            //$this->template->full_admin_html_view($content);
+        }
         public function performer_ins(){
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
@@ -2535,17 +2552,17 @@ print_r($data);
          $data = array(
                     'purchase_id' => $purchase_id,
                     'chalan_no'=>$this->input->post('chalan_no'),
-                    'purchase_date'=>$this->input->post('date'),
-                    'billing_address'=> 'no',
+                    'purchase_date'=>$this->input->post('purchase_date'),
+                    'billing_address'=> $this->input->post('billing_address'),
                     'customer_id'=>$this->input->post('customer_id'),
                     'pre_carriage'=>$this->input->post('pre_carriage'),
-                    'receipt'=>$this->input->post('eta'),
-                    'country_goods'=>$this->input->post('shipping_line'),
-                    'country_destination'=>$this->input->post('container_no'),
-                    'loading'=>$this->input->post('bl_number'),
-                    'discharge'=>$this->input->post('bd_number'),
-                    'terms_payment'=>$this->input->post('delivery'),
-                    'description_goods'=>$this->input->post('goods'),
+                    'receipt'=>$this->input->post('receipt'),
+                    'country_goods'=>$this->input->post('country_goods'),
+                    'country_destination'=>$this->input->post('country_destination'),
+                    'loading'=>$this->input->post('loading'),
+                    'discharge'=>$this->input->post('discharge'),
+                    'terms_payment'=>$this->input->post('terms_payment'),
+                    'description_goods'=>$this->input->post('description_goods'),
                     'total'=>$this->input->post('total'),
                     'ac_details'=>$this->input->post('ac_details'),
                      'sales_by'        => $this->session->userdata('user_id')
@@ -2558,11 +2575,13 @@ print_r($data);
               //   var_dump($_POST);
                  $avl = $this->input->post('available_quantity');
                  $p_id = $this->input->post('product_id');
+               
                  $quantity = $this->input->post('product_quantity');
                  $rate = $this->input->post('product_rate');
                  $t_price = $this->input->post('total_price');
-              
-                 for ($i = 0, $n = count($avl); $i < $n; $i++) {
+                 $rowCount = count($this->input->post('trucking_date',TRUE));
+                 for ($i = 0; $i < $rowCount; $i++) {
+               
                     $product_quantity = $quantity[$i];
                     $product_rate = $rate[$i];
                     $product_id = $p_id[$i];

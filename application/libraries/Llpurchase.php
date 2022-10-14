@@ -1137,13 +1137,22 @@ class Llpurchase {
 
         }
 
+        $CII = & get_instance();
+       
+        $CII->load->model('invoice_design');
+       
 
+       $dataw = $CII->invoice_design->retrieve_data();
 
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
 
         $company_info = $CI->Ppurchases->retrieve_company();
 
         $data = array(
+            'header'=> $dataw[0]['header'],
+            'logo'=> $dataw[0]['logo'],
+            'color'=> $dataw[0]['color'],
+            'template'=> $dataw[0]['template'],
 
         'title'            => 'Ocean Import Tracking Invoice Detail',
 
@@ -1152,7 +1161,7 @@ class Llpurchase {
             'booking_no' => $purchase_detail[0]['booking_no'],
 
             'container_no'    => $purchase_detail[0]['container_no'],
-
+'company_info' => $company_info,
             'seal_no'       => $purchase_detail[0]['seal_no'],
             'etd' => $purchase_detail[0]['etd'],
             'eta' => $purchase_detail[0]['eta'],
@@ -1172,7 +1181,7 @@ class Llpurchase {
             'attachment' => $purchase_detail[0]['attachment'],
             'status' => $purchase_detail[0]['status'],
             'create_by' => $purchase_detail[0]['create_by'],
-
+            'remarks' => $purchase_detail[0]['remarks'],
             // 'sub_total_amount' => number_format($purchase_detail[0]['grand_total_amount'], 2, '.', ','),
 
        
@@ -1237,10 +1246,13 @@ class Llpurchase {
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
         $CII = & get_instance();
         $CC = & get_instance();
+      
         $company_info = $CI->Ppurchases->retrieve_company();
         $CII->load->model('invoice_design');
         $CC->load->model('invoice_content');
-
+        $CI1 = & get_instance();
+        $CI1->load->model('Purchases');
+        $all_supplier = $CI1->Purchases->select_all_supplier();
        $dataw = $CII->invoice_design->retrieve_data();
        $datacontent = $CI->invoice_content->retrieve_data();
      $data = array(
@@ -1248,6 +1260,7 @@ class Llpurchase {
             'logo'=> $dataw[0]['logo'],
             'color'=> $dataw[0]['color'],
             'template'=> $dataw[0]['template'],
+            'all_supplier' => $all_supplier,
             'address'=>$datacontent[0]['address'],
             'cname'=>$datacontent[0]['business_name'],
             'phone'=>$datacontent[0]['phone'],

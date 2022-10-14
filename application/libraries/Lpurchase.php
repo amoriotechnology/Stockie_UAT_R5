@@ -17,8 +17,8 @@ class Lpurchase {
     public function purchase_add_form() {
 
         $CI = & get_instance();
-
-        $CI->load->model('Purchases');
+        $CI1 = & get_instance();
+        $CI1->load->model('Purchases');
             $CI->load->model('Suppliers');
         $CI->load->model('Categories');
         $CI->load->model('Units');
@@ -28,7 +28,7 @@ class Lpurchase {
 
         $CI->load->model('Web_settings');
 
-        $all_supplier = $CI->Purchases->select_all_supplier();
+        $all_supplier = $CI1->Purchases->select_all_supplier();
            $supplier      = $CI->Suppliers->supplier_list("110", "0");
 
         $currency_details = $CI->Web_settings->retrieve_setting_editdata();
@@ -47,7 +47,7 @@ class Lpurchase {
 
             'all_supplier'  => $all_supplier,
 
-               'supplier'     => $supplier,
+           
 
             'invoice_no'    => $CI->auth->generator(10),
 

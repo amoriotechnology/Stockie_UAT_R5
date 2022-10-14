@@ -578,47 +578,7 @@ function ajaxcall(){
 var csrfName = '<?php echo $this->security->get_csrf_token_name();?>';
 var csrfHash = '<?php echo $this->security->get_csrf_hash();?>';
 
-function available_quantity (id) {
-    //create data object here so we can dynamically set new csrfName/Hash
-    $('.product_name').on('change', function (e) {
-        var name = 'available_quantity_'+ id;
-   
-   var amount = 'product_rate_'+ id;
-   var pdt=$('#prodt_'+id).val();
-   const myArray = pdt.split("-");
-   var product_nam=myArray[0];
-   var product_model=myArray[1];
-  // alert(pdt);
-    var data = {
-       amount:'product_rate_'+ id,
-       name:'available_quantity_'+ id,
-       product_nam:product_nam,
-       product_model:product_model
-    };
-    data[csrfName] = csrfHash;
 
-    $.ajax({
-        type:'POST',
-        data: data, 
-        //dataType tells jQuery to expect JSON response
-        dataType:"json",
-        url:'<?php echo base_url();?>Cinvoice/availability',
-        success: function(result, statut) {
-            if(result.csrfName){
-               //assign the new csrfName/Hash
-               csrfName = result.csrfName;
-               csrfHash = result.csrfHash;
-            }
-           // var parsedData = JSON.parse(result);
-          //  alert(result[0].p_quantity);
-          $(".available_quantity_"+ id).val(result[0]['p_quantity']);
-          $("#product_rate_"+ id).val(result[0]['price']);
-          //  $('#available_quantity_'+ id).html(result[0].p_quantity);
-            console.log(result);
-        }
-    });
-});
-}
 
     //create data object here so we can dynamically set new csrfName/Hash
     $('#add_purchase').click(function(id){
@@ -627,7 +587,7 @@ function available_quantity (id) {
         var aval = $('#available_quantity').val();
         var formdata = $('#pdt').serialize();
     var data = {
-        formdata:$('#pdt').serialize();
+        formdata:$('#pdt').serialize(),
      
         billing_address:$('#billing_address').val(),
         chalan_no:$('#chalan_no').val(),
@@ -730,7 +690,47 @@ function sumArray(array) {
   return sum;
 }
 
+function available_quantity (id) {
+    //create data object here so we can dynamically set new csrfName/Hash
+    $('.product_name').on('change', function (e) {
+        var name = 'available_quantity_'+ id;
+   
+   var amount = 'product_rate_'+ id;
+   var pdt=$('#prodt_'+id).val();
+   const myArray = pdt.split("-");
+   var product_nam=myArray[0];
+   var product_model=myArray[1];
+  // alert(pdt);
+    var data = {
+       amount:'product_rate_'+ id,
+       name:'available_quantity_'+ id,
+       product_nam:product_nam,
+       product_model:product_model
+    };
+    data[csrfName] = csrfHash;
 
+    $.ajax({
+        type:'POST',
+        data: data, 
+        //dataType tells jQuery to expect JSON response
+        dataType:"json",
+        url:'<?php echo base_url();?>Cinvoice/availability',
+        success: function(result, statut) {
+            if(result.csrfName){
+               //assign the new csrfName/Hash
+               csrfName = result.csrfName;
+               csrfHash = result.csrfHash;
+            }
+           // var parsedData = JSON.parse(result);
+          //  alert(result[0].p_quantity);
+          $(".available_quantity_"+ id).val(result[0]['p_quantity']);
+          $("#product_rate_"+ id).val(result[0]['price']);
+          //  $('#available_quantity_'+ id).html(result[0].p_quantity);
+            console.log(result);
+        }
+    });
+});
+}
 
 
 var arr=[];

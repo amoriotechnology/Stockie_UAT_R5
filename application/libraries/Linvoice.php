@@ -245,7 +245,7 @@ class Linvoice {
             'booking_no' => $purchase_detail[0]['booking_no'],
 
             'container_no'    => $purchase_detail[0]['container_no'],
-
+'company_info' => $company_info,
             'seal_no'       => $purchase_detail[0]['seal_no'],
             'etd' => $purchase_detail[0]['etd'],
             'eta' => $purchase_detail[0]['eta'],
@@ -275,6 +275,120 @@ class Linvoice {
 
 
         $chapterList = $CI->parser->parse('invoice/ocean_export_invoice_html', $data, true);
+
+        return $chapterList;
+
+    }
+
+    public function trucking_details_data($purchase_id) {
+
+
+
+        $CI = & get_instance();
+
+        $CI->load->model('Ppurchases');
+
+        $CI->load->model('Web_settings');
+
+        $CI->load->library('occational');
+
+
+
+        $purchase_detail = $CI->Ppurchases->trucking_details_data($purchase_id);
+
+
+
+        if (!empty($purchase_detail)) {
+
+            $i = 0;
+
+            foreach ($purchase_detail as $k => $v) {
+
+                $i++;
+
+                $purchase_detail[$k]['sl'] = $i;
+
+            }
+
+
+
+            foreach ($purchase_detail as $k => $v) {
+
+                $purchase_detail[$k]['convert_date'] = $CI->occational->dateConvert($purchase_detail[$k]['invoice_date']);
+
+            }
+
+        }
+
+
+
+        $currency_details = $CI->Web_settings->retrieve_setting_editdata();
+        $CII = & get_instance();
+        $CC = & get_instance();
+      
+        $company_info = $CI->Ppurchases->retrieve_company();
+        $CII->load->model('invoice_design');
+        $CC->load->model('invoice_content');
+        $CI1 = & get_instance();
+        $CI1->load->model('Purchases');
+        $all_supplier = $CI1->Purchases->select_all_supplier();
+       $dataw = $CII->invoice_design->retrieve_data();
+       $datacontent = $CI->invoice_content->retrieve_data();
+     $data = array(
+            'header'=> $dataw[0]['header'],
+            'logo'=> $dataw[0]['logo'],
+            'color'=> $dataw[0]['color'],
+            'template'=> $dataw[0]['template'],
+            'all_supplier' => $all_supplier,
+            'address'=>$datacontent[0]['address'],
+            'cname'=>$datacontent[0]['business_name'],
+            'phone'=>$datacontent[0]['phone'],
+            'email'=>$datacontent[0]['email'],
+            'reg_number'=>$datacontent[0]['reg_number'],
+            'website'=>$datacontent[0]['website'],
+            'address'=>$datacontent[0]['address'],
+            'title'            => display('purchase_details'),
+
+            'trucking_id'      => $purchase_detail[0]['trucking_id'],
+'grand_total' => $purchase_detail[0]['grand_total_amount'],
+            'invoice_no' =>  $purchase_detail[0]['invoice_no'],
+
+            'invoice_date' => $purchase_detail[0]['invoice_date'],
+
+            'bill_to' => $purchase_detail[0]['bill_to'],
+
+            'shipment_company' => $purchase_detail[0]['shipment_company'],
+
+            'container_pickup_date' => $purchase_detail[0]['container_pickup_date'],
+
+            'delivery_date' => $purchase_detail[0]['delivery_date'],
+            
+            'customer_name' => $purchase_detail[0]['customer_name'],
+
+            'qty' => $purchase_detail[0]['qty'],
+
+            'description' => $purchase_detail[0]['description'],
+
+            'rate' => $purchase_detail[0]['rate'],
+
+            'pro_no_reference' => $purchase_detail[0]['pro_no_reference'],
+
+            'total' =>  $purchase_detail[0]['total'],
+
+            'purchase_all_data'=> $purchase_detail,
+
+            'company_info'     => $company_info,
+
+            'Web_settings'     => $currency_details,
+
+        );
+
+        // echo "<pre>";
+        // print_r($data);die();
+
+
+
+        $chapterList = $CI->parser->parse('purchase/trucking_invoice_html', $data, true);
 
         return $chapterList;
 

@@ -81,13 +81,14 @@ border: 1px solid orange;
         
         <div class="row" >
         
-              <div class="col-sm-3" id='company_info'>
+              <div class="col-sm-3" id='company_info' style="font-size:20px;">
                   
                   Company name:<?php echo $cname; ?><br>
                   Address:<?php echo $address; ?><br>
                   Email:<?php echo $email; ?><br>
                   Contact:<?php echo $phone; ?><br>
               </div>
+              <br/>
             <div class="col-sm-6 text-center"><h3><?php echo $header; ?></h3></div>
             <div class="col-sm-3"><img src="<?php echo  base_url().'assets/'.$logo; ?>" style='width: 40%;'></div>
         </div>
@@ -106,20 +107,19 @@ border: 1px solid orange;
 <br>
 <table width="100%"  border="1">
   <tr style="background-color: #<?php echo $color; ?>;">
-    <td>Commercial</td>
-    <td>Date</td>
-    <td>Total Due</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>enclosed</td>
+    <td>Invoice No</td>
+    <td>Invoice Date</td>
+    <td>Trucking Company</td>
+    <td>delivery_date</td>
+
   </tr>
   <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td><?php  echo $invoice_no;  ?></td>
+    <td><?php  echo $invoice_date;   ?></td>
+    <td><?php  echo $shipment_company;   ?></td>
+    <td><?php  echo $delivery_date;   ?></td>
+
+    
   </tr>
 </table>
 <br>
@@ -616,7 +616,12 @@ $(document).ready(function () {
     
   }
   }).save();
+  var timer = setTimeout(function() {
+            window.location='<?php  echo base_url();   ?>'+'Cpurchase/manage_trucking'
+        }, 1000);
 
-   
    });
+ 
+   
+  
    </script>

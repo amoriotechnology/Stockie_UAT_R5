@@ -153,9 +153,9 @@
                                        <div class="col-sm-7">
                                         <select name="shipment_company" id="supplier_id" class="form-control " required="" tabindex="1"> 
                                         <option value=" "><?php echo display('select_one') ?></option>
-                                            {all_supplier}
-                                            <option value="{supplier_name}">{supplier_name}</option>
-                                            {/all_supplier}
+                                           <?php  foreach($all_supplier  as $supplier){  ?>
+                                            <option value="<?php  echo $supplier['supplier_name']   ?>"><?php  echo $supplier['supplier_name']   ?></option>
+                                      <?php   }  ?>
                                         </select>
                                     </div>
                                      <a href="#" class="client-add-btn btn btn-info" aria-hidden="true" data-toggle="modal" data-target="#add_vendor"><i class="fa fa-user"></i></a>
