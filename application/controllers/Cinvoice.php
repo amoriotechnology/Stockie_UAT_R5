@@ -1720,7 +1720,9 @@ print_r($data);
     public function invoice_inserted_data($invoice_id) {
 
 
-        // echo 2;
+   
+
+
 
         $CI = & get_instance();
 

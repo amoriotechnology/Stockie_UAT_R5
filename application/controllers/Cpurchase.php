@@ -438,9 +438,16 @@ class Cpurchase extends CI_Controller {
 
     //Retrive right now inserted data to cretae html
     public function purchase_details_data($purchase_id) {
+        
         $CI = & get_instance();
         $CI->auth->check_admin_auth();
         $CI->load->library('lpurchase');
+          $data=array();
+        $this->load->model('Purchases');
+
+        // $data['company_info']=
+            
+        exit;
         $content = $CI->lpurchase->purchase_details_data($purchase_id);
         $this->template->full_admin_html_view($content);
     }
@@ -470,6 +477,9 @@ class Cpurchase extends CI_Controller {
         $invoice_no = $this->uri->segment(3); 
         $data['invoice'] =$this->Purchases->get_purchases_invoice($invoice_no);
         $data['order'] =$this->Purchases->get_purchases_order($invoice_no);
+        $data['supplier'] =$this->Purchases->get_supplier($invoice_no);
+        $data['company_info'] =$this->Purchases->company_info();
+
         $content = $this->load->view('purchase/purchase_order_invoice', $data, true);
         //$content='';
         $this->template->full_admin_html_view($content);
@@ -567,5 +577,8 @@ class Cpurchase extends CI_Controller {
            $file_name = 'purchase'.$time.'.pdf';
             force_download(FCPATH.'assets/data/pdf/'.$file_name, null);
     }
+
+
+
    
 }
