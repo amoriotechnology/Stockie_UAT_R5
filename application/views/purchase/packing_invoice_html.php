@@ -26,6 +26,7 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
             </ol>
         </div>
     </section>
+    <div class="" id="content">
     <!-- Main content -->
     <section class="content">
         <!-- Alert Message -->
@@ -52,11 +53,11 @@ $Web_settings = $CI->Web_settings->retrieve_setting_editdata();
         }
         ?>
       <!-- <table id="tab"> -->
-      <div class="" id="content">
+    
             <div class="row">
                <div class="document">
                   <div class="spreadSheetGroup">
-                     <table class="shipToFrom table table-bordered">
+                     <table class="shipToFrom table table-bordered" style="width:auto">
                         <thead>
                            <tr>
                               <th class="col-md-4 oc-head1"><img src="<?php echo  base_url().'assets/'.$logo; ?>"  alt=""></th>
@@ -178,7 +179,7 @@ $(document).ready(function () {
              console.log(invoice);
              console.log(window);
              var pageWidth = 8.5;
-             var margin=0.5;
+             var margin=3.5;
              var opt = {
    lineHeight : 1.2,
    margin : 0.2,
